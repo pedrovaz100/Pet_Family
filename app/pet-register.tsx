@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Button } from '../src/components/Button';
 import { savePet, getPet, removePet } from '../src/services/storage';
 import { Pet } from '../src/types';
@@ -22,10 +22,10 @@ import { Colors } from '../src/constants/colors';
 
 const { width } = Dimensions.get('window');
 
-const SPECIES: { value: Pet['species']; label: string; emoji: string }[] = [
-  { value: 'dog', label: 'Cão', emoji: '🐶' },
-  { value: 'cat', label: 'Gato', emoji: '🐱' },
-  { value: 'other', label: 'Outro', emoji: '🐾' },
+const SPECIES: { value: Pet['species']; label: string; icon: string }[] = [
+  { value: 'dog',   label: 'Cão',   icon: 'dog' },
+  { value: 'cat',   label: 'Gato',  icon: 'cat' },
+  { value: 'other', label: 'Outro', icon: 'paw' },
 ];
 
 const empty: Pet = {
@@ -95,7 +95,7 @@ export default function PetRegisterScreen() {
         {/* Preview flutuante */}
         {pet.name.length > 0 && (
           <View style={styles.previewPill}>
-            <Text style={styles.previewEmoji}>{speciesObj.emoji}</Text>
+            <MaterialCommunityIcons name={speciesObj.icon as any} size={16} color={Colors.white} style={{ marginRight: 6 }} />
             <Text style={styles.previewName}>{pet.name}</Text>
             {pet.breed ? <Text style={styles.previewBreed}> · {pet.breed}</Text> : null}
             {saved && (
@@ -125,7 +125,12 @@ export default function PetRegisterScreen() {
                 onPress={() => update('species', s.value)}
                 activeOpacity={0.8}
               >
-                <Text style={styles.speciesEmoji}>{s.emoji}</Text>
+                <MaterialCommunityIcons
+                  name={s.icon as any}
+                  size={28}
+                  color={pet.species === s.value ? Colors.primary : Colors.textLight}
+                  style={styles.speciesIcon}
+                />
                 <Text style={[styles.speciesLabel, pet.species === s.value && styles.speciesLabelActive]}>
                   {s.label}
                 </Text>
@@ -304,7 +309,7 @@ const styles = StyleSheet.create({
     marginTop: 14,
     alignSelf: 'flex-start',
   },
-  previewEmoji: { fontSize: 18, marginRight: 6 },
+
   previewName: { fontSize: 14, fontWeight: '700', color: Colors.white },
   previewBreed: { fontSize: 13, color: 'rgba(255,255,255,0.8)' },
   savedDot: { marginLeft: 6 },
@@ -336,7 +341,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   speciesBtnActive: { borderColor: Colors.primary, backgroundColor: Colors.primaryLight },
-  speciesEmoji: { fontSize: 28, marginBottom: 6 },
+  speciesIcon: { marginBottom: 6 },
   speciesLabel: { fontSize: 13, fontWeight: '600', color: Colors.textSecondary },
   speciesLabelActive: { color: Colors.primary },
   speciesCheck: {
