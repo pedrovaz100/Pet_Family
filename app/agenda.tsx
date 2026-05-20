@@ -59,9 +59,9 @@ export default function AgendaScreen() {
           end={{ x: 1, y: 1 }}
           style={styles.header}
         >
-          <Text style={styles.headerTitle}>Lembretes</Text>
+          <Text style={styles.headerTitle}>Agenda de Saúde</Text>
           <Text style={styles.headerSub}>
-            {petName ? `Lembretes de ${petName}` : 'Lembretes importantes do seu pet'}
+            {petName ? `Cuidados e lembretes de ${petName}` : 'Acompanhe a saúde do seu pet'}
           </Text>
 
           {/* Progress ring area */}
@@ -100,19 +100,19 @@ export default function AgendaScreen() {
 
           {pending.length > 0 && (
             <>
-              <Text style={styles.sectionTitle}>⏰ Pendentes</Text>
+              <Text style={styles.sectionTitle}>Pendentes</Text>
               {pending.map(r => <ReminderCard key={r.id} reminder={r} onMarkDone={markDone} />)}
             </>
           )}
           {recommended.length > 0 && (
             <>
-              <Text style={styles.sectionTitle}>📋 Recomendados</Text>
+              <Text style={[styles.sectionTitle, styles.sectionTitleSpaced]}>Recomendados</Text>
               {recommended.map(r => <ReminderCard key={r.id} reminder={r} onMarkDone={markDone} />)}
             </>
           )}
           {done.length > 0 && (
             <>
-              <Text style={styles.sectionTitle}>✅ Concluídos</Text>
+              <Text style={[styles.sectionTitle, styles.sectionTitleSpaced]}>Concluídos</Text>
               {done.map(r => <ReminderCard key={r.id} reminder={r} onMarkDone={markDone} />)}
             </>
           )}
@@ -128,29 +128,30 @@ const styles = StyleSheet.create({
   scroll: { flex: 1, backgroundColor: Colors.background },
   content: { paddingBottom: 0 },
 
-  header: { paddingHorizontal: 20, paddingTop: 20, paddingBottom: 36 },
-  headerTitle: { fontSize: 22, fontWeight: '900', color: Colors.white },
-  headerSub: { fontSize: 13, color: 'rgba(255,255,255,0.75)', marginTop: 4, marginBottom: 20 },
+  header: { paddingHorizontal: 20, paddingTop: 24, paddingBottom: 40 },
+  headerTitle: { fontSize: 24, fontWeight: '900', color: Colors.white },
+  headerSub: { fontSize: 14, color: 'rgba(255,255,255,0.75)', marginTop: 6, marginBottom: 24 },
 
   statsRow: {
     flexDirection: 'row',
     backgroundColor: 'rgba(255,255,255,0.15)',
-    borderRadius: 16,
-    padding: 14,
+    borderRadius: 18,
+    padding: 16,
     alignItems: 'center',
   },
   statBox: { flex: 1, alignItems: 'center' },
-  statNum: { fontSize: 20, fontWeight: '900', color: Colors.white },
-  statLabel: { fontSize: 10, color: 'rgba(255,255,255,0.75)', marginTop: 2, textAlign: 'center' },
+  statNum: { fontSize: 22, fontWeight: '900', color: Colors.white },
+  statLabel: { fontSize: 11, color: 'rgba(255,255,255,0.75)', marginTop: 3, textAlign: 'center' },
   statDivider: { width: 1, height: 32, backgroundColor: 'rgba(255,255,255,0.25)', marginHorizontal: 4 },
 
-  sheet: { backgroundColor: Colors.background, borderTopLeftRadius: 28, borderTopRightRadius: 28, marginTop: -24, padding: 16 },
+  sheet: { backgroundColor: Colors.background, borderTopLeftRadius: 28, borderTopRightRadius: 28, marginTop: -24, padding: 20 },
 
-  progressWrap: { marginBottom: 20 },
-  progressBg: { height: 8, backgroundColor: Colors.border, borderRadius: 4, overflow: 'hidden', marginBottom: 6 },
+  progressWrap: { marginBottom: 28 },
+  progressBg: { height: 8, backgroundColor: Colors.border, borderRadius: 4, overflow: 'hidden', marginBottom: 8 },
   progressFill: { height: '100%', backgroundColor: Colors.green, borderRadius: 4 },
-  progressText: { fontSize: 12, color: Colors.textSecondary, textAlign: 'right', fontWeight: '500' },
+  progressText: { fontSize: 13, color: Colors.textSecondary, textAlign: 'right', fontWeight: '500' },
 
-  sectionTitle: { fontSize: 15, fontWeight: '800', color: Colors.text, marginBottom: 10, marginTop: 4, letterSpacing: 0.1 },
-  bottomPad: { height: 28 },
+  sectionTitle: { fontSize: 16, fontWeight: '800', color: Colors.text, marginBottom: 12, marginTop: 4, letterSpacing: 0.2 },
+  sectionTitleSpaced: { marginTop: 24 },
+  bottomPad: { height: 32 },
 });

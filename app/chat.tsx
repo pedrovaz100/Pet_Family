@@ -11,6 +11,7 @@ import {
   StatusBar,
   Dimensions,
   Image,
+  ImageBackground,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -151,12 +152,17 @@ export default function ChatScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         {/* ── MENSAGENS ── */}
+        <ImageBackground
+          source={require('../assets/Papel_de_parede.png')}
+          style={styles.list}
+          resizeMode="cover"
+        >
         <FlatList
           ref={flatListRef}
           data={messages}
           keyExtractor={item => item.id}
           renderItem={({ item }) => <ChatBubble message={item} />}
-          style={styles.list}
+          style={{ flex: 1 }}
           contentContainerStyle={styles.listContent}
           onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
           ListFooterComponent={
@@ -174,6 +180,7 @@ export default function ChatScreen() {
             ) : null
           }
         />
+        </ImageBackground>
 
         {/* ── QUICK REPLIES ── */}
         <View style={styles.quickWrap}>

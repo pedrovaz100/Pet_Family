@@ -15,7 +15,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getPet, getAppointment } from '../src/services/storage';
 import { Pet, Appointment } from '../src/types';
-import { Colors } from '../src/constants/colors';
 
 const { width } = Dimensions.get('window');
 const CARD_W = (width - 44) / 2;
@@ -28,15 +27,9 @@ const TEXT = '#1F2937';
 const MUTED = '#6B7280';
 const BORDER = '#E9D5FF';
 
-const speciesEmoji: Record<string, string> = {
-  dog: '🐶',
-  cat: '🐱',
-  other: '🐾',
-};
-
 const CATEGORIES = [
   { label: 'Meu Pet', icon: 'paw', route: '/pet-register' },
-  { label: 'Agenda', icon: 'calendar', route: '/agenda' },
+  { label: 'Lembretes', icon: 'notifications', route: '/agenda' },
   { label: 'Chat IA', icon: 'chatbubbles', route: '/chat' },
   { label: 'Consulta', icon: 'medical', route: '/appointment' },
   { label: 'Clínica', icon: 'stats-chart', route: '/dashboard' },
@@ -57,8 +50,6 @@ export default function HomeScreen() {
     }, [])
   );
 
-  const petEmoji = pet ? speciesEmoji[pet.species] || '🐾' : '🐾';
-
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <StatusBar barStyle="light-content" backgroundColor={PURPLE} />
@@ -73,7 +64,7 @@ export default function HomeScreen() {
           <View style={styles.headerTop}>
             <View>
               <Text style={styles.greeting}>
-                Olá, {pet?.name ? `tutor de ${pet.name}` : 'Tutor'} 👋
+                Olá, {pet?.name ? `tutor de ${pet.name}` : 'Tutor'}
               </Text>
               <Text style={styles.headerSub}>Cuidado contínuo para seu pet</Text>
             </View>
@@ -93,7 +84,11 @@ export default function HomeScreen() {
             onPress={() => router.push('/pet-register')}
           >
             <View style={styles.petAvatar}>
-              <Text style={styles.petAvatarText}>{petEmoji}</Text>
+              <Image
+                source={require('../assets/avatarPet-.png')}
+                style={styles.petAvatarImg}
+                resizeMode="contain"
+              />
             </View>
 
             <View style={styles.mainCardText}>
@@ -137,37 +132,45 @@ export default function HomeScreen() {
           <View style={styles.cardRow}>
             <TouchableOpacity
               style={styles.infoCard}
-              activeOpacity={0.9}
+              activeOpacity={0.88}
               onPress={() => router.push('/agenda')}
             >
               <LinearGradient
-                colors={[PURPLE, '#A855F7']}
+                colors={['#6D28D9', '#7C3AED']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
                 style={styles.infoGradient}
               >
                 <View style={styles.badge}>
                   <Text style={styles.badgeText}>Preventivo</Text>
                 </View>
-                <Text style={styles.infoTitle}>Cuidados em dia</Text>
-                <Text style={styles.infoSub}>Vacinas, check-ups e lembretes</Text>
-                <Text style={styles.infoEmoji}>🐶</Text>
+                <Text style={styles.infoTitle}>Cuidados{'\n'}em dia</Text>
+                <Text style={styles.infoSub}>Vacinas e lembretes</Text>
+                <View style={styles.infoIconCircle}>
+                  <Ionicons name="shield-checkmark" size={28} color="#FFFFFF" />
+                </View>
               </LinearGradient>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.infoCard}
-              activeOpacity={0.9}
+              activeOpacity={0.88}
               onPress={() => router.push('/appointment')}
             >
               <LinearGradient
-                colors={['#8B5CF6', '#C084FC']}
+                colors={['#7C3AED', '#A855F7']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
                 style={styles.infoGradient}
               >
                 <View style={styles.badge}>
                   <Text style={styles.badgeText}>Consulta</Text>
                 </View>
-                <Text style={styles.infoTitle}>Agende check-up</Text>
-                <Text style={styles.infoSub}>Acompanhamento personalizado</Text>
-                <Text style={styles.infoEmoji}>🐱</Text>
+                <Text style={styles.infoTitle}>Agende{'\n'}check-up</Text>
+                <Text style={styles.infoSub}>Acompanhamento</Text>
+                <View style={styles.infoIconCircle}>
+                  <Ionicons name="calendar" size={28} color="#FFFFFF" />
+                </View>
               </LinearGradient>
             </TouchableOpacity>
           </View>
@@ -299,16 +302,15 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   petAvatar: {
-    width: 58,
-    height: 58,
-    borderRadius: 18,
-    backgroundColor: PURPLE_LIGHT,
+    width: 72,
+    height: 72,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 14,
   },
-  petAvatarText: {
-    fontSize: 30,
+  petAvatarImg: {
+    width: 72,
+    height: 72,
   },
   mainCardText: {
     flex: 1,
@@ -378,9 +380,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   infoGradient: {
-    minHeight: 150,
-    padding: 15,
-    justifyContent: 'space-between',
+    minHeight: 182,
+    paddingTop: 16,
+    paddingHorizontal: 16,
+    paddingBottom: 72,
+    justifyContent: 'flex-start',
   },
   badge: {
     alignSelf: 'flex-start',
@@ -396,18 +400,26 @@ const styles = StyleSheet.create({
   },
   infoTitle: {
     color: '#FFFFFF',
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '900',
-    lineHeight: 20,
+    lineHeight: 22,
+    marginTop: 12,
   },
   infoSub: {
-    color: 'rgba(255,255,255,0.82)',
+    color: 'rgba(255,255,255,0.78)',
     fontSize: 12,
-    marginTop: 4,
+    marginTop: 5,
   },
-  infoEmoji: {
-    fontSize: 34,
-    alignSelf: 'flex-end',
+  infoIconCircle: {
+    position: 'absolute',
+    bottom: 14,
+    right: 16,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: 'rgba(255,255,255,0.18)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   aiCard: {
     backgroundColor: '#FFFFFF',
