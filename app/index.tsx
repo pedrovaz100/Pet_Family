@@ -10,7 +10,7 @@ import {
   Image,
 } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getPet, getAppointment } from '../src/services/storage';
@@ -194,7 +194,7 @@ export default function HomeScreen() {
 
           <View style={styles.alertCard}>
             <View style={styles.alertIcon}>
-              <Text style={styles.alertEmoji}>💉</Text>
+              <MaterialCommunityIcons name="needle" size={22} color={PURPLE} />
             </View>
             <View style={styles.alertInfo}>
               <Text style={styles.alertTitle}>
@@ -209,7 +209,7 @@ export default function HomeScreen() {
 
           <View style={styles.alertCard}>
             <View style={styles.alertIcon}>
-              <Text style={styles.alertEmoji}>🔬</Text>
+              <MaterialCommunityIcons name="stethoscope" size={22} color={PURPLE} />
             </View>
             <View style={styles.alertInfo}>
               <Text style={styles.alertTitle}>Check-up anual</Text>
@@ -223,7 +223,7 @@ export default function HomeScreen() {
           {appointment && (
             <View style={styles.alertCard}>
               <View style={styles.alertIcon}>
-                <Text style={styles.alertEmoji}>📅</Text>
+                <MaterialCommunityIcons name="calendar-check" size={22} color={PURPLE} />
               </View>
               <View style={styles.alertInfo}>
                 <Text style={styles.alertTitle}>{appointment.petName}</Text>
@@ -479,9 +479,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: 12,
   },
-  alertEmoji: {
-    fontSize: 22,
-  },
+
   alertInfo: {
     flex: 1,
   },

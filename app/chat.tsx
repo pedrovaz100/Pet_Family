@@ -9,7 +9,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   StatusBar,
-  Dimensions,
   Image,
   ImageBackground,
 } from 'react-native';
@@ -22,7 +21,7 @@ import { getPet } from '../src/services/storage';
 import { ChatMessage } from '../src/types';
 import { Colors } from '../src/constants/colors';
 
-const { width } = Dimensions.get('window');
+
 let msgId = 1;
 const newId = () => String(msgId++);
 
@@ -31,38 +30,38 @@ const getAIResponse = (text: string, petName: string): string => {
   const name = petName || 'seu pet';
 
   if (lower.includes('vacina') || lower.includes('vacinação')) {
-    return `🐾 Boa pergunta sobre vacinação! Para ${name}, as vacinas essenciais incluem a V10 (polivalente) e a antirrábica, aplicadas anualmente. Filhotes precisam do esquema inicial com reforços a cada 21-28 dias. Manter o cartão de vacinas em dia é fundamental para a saúde preventiva! Posso agendar uma consulta de vacinação para você? 💉`;
+    return `Boa pergunta sobre vacinação! Para ${name}, as vacinas essenciais incluem a V10 (polivalente) e a antirrábica, aplicadas anualmente. Filhotes precisam do esquema inicial com reforços a cada 21-28 dias. Manter o cartão de vacinas em dia é fundamental para a saúde preventiva!`;
   }
   if (lower.includes('vermífugo') || lower.includes('verme') || lower.includes('vermifugação')) {
-    return `✅ Vermifugação é super importante para ${name}! Recomendamos a cada 3 meses para adultos. Filhotes devem ser vermifugados com 2, 4, 6 e 8 semanas, depois trimestral. Use sempre produto indicado pelo veterinário! 🌿`;
+    return `Vermifugação é super importante para ${name}! Recomendamos a cada 3 meses para adultos. Filhotes devem ser vermifugados com 2, 4, 6 e 8 semanas, depois trimestral. Use sempre produto indicado pelo veterinário.`;
   }
   if (lower.includes('check-up') || lower.includes('checkup') || lower.includes('exame')) {
-    return `🔬 O check-up anual é essencial para ${name}! Inclui avaliação clínica, exames de sangue, urina e fezes — detecta doenças precocemente. Pets acima de 7 anos devem fazer a cada 6 meses. Saúde preventiva salva vidas! ❤️`;
+    return `O check-up anual é essencial para ${name}! Inclui avaliação clínica, exames de sangue, urina e fezes — detecta doenças precocemente. Pets acima de 7 anos devem fazer a cada 6 meses. Saúde preventiva salva vidas!`;
   }
   if (lower.includes('doente') || lower.includes('vomitando') || lower.includes('sem comer') || lower.includes('triste') || lower.includes('mal')) {
-    return `😟 Fico preocupado com ${name}! Esses sintomas merecem atenção imediata. Leve ${name} à clínica o quanto antes — não espere piorar. Se for urgente, procure um pronto-socorro veterinário! 🏥 Quer agendar agora?`;
+    return `Fico preocupado com ${name}! Esses sintomas merecem atenção imediata. Leve ${name} à clínica o quanto antes — não espere piorar. Se for urgente, procure um pronto-socorro veterinário. Quer agendar agora?`;
   }
   if (lower.includes('consulta') || lower.includes('agendar') || lower.includes('marcar')) {
-    return `📅 Claro! Vá na aba "Consulta" para agendar com ${name}. Temos horários de segunda a sábado, 8h–18h. Há urgência no atendimento? 🩺`;
+    return `Claro! Vá na aba "Consulta" para agendar com ${name}. Temos horários de segunda a sábado, 8h–18h. Há urgência no atendimento?`;
   }
   if (lower.includes('ração') || lower.includes('alimentação') || lower.includes('comida')) {
-    return `🍖 A alimentação de ${name} é crucial! Ração premium adequada à espécie, porte e fase de vida. Evite uva, cebola, chocolate e xilitol — são tóxicos para pets. Posso calcular a dieta ideal! 🥗`;
+    return `A alimentação de ${name} é crucial! Ração premium adequada à espécie, porte e fase de vida. Evite uva, cebola, chocolate e xilitol — são tóxicos para pets.`;
   }
   if (lower.includes('banho') || lower.includes('tosa') || lower.includes('higiene')) {
-    return `🛁 Higiene é saúde! Cães: banho a cada 15-30 dias. Gatos se higienizam sozinhos. Não esqueça: limpeza dos ouvidos, corte de unhas e escovação dos dentes! 🦷`;
+    return `Higiene é saúde! Cães: banho a cada 15-30 dias. Gatos se higienizam sozinhos. Não esqueça: limpeza dos ouvidos, corte de unhas e escovação dos dentes!`;
   }
   if (lower.includes('olá') || lower.includes('oi') || lower.includes('bom dia') || lower.includes('boa')) {
-    return `Olá! 🐾 Sou o Assistente Pet Family, aqui para cuidar de ${name}! Pergunte sobre vacinas, vermífugo, check-up, alimentação ou sintomas. Como posso ajudar? 😊`;
+    return `Olá! Sou o Assistente Pet Family, aqui para cuidar de ${name}! Pergunte sobre vacinas, vermífugo, check-up, alimentação ou sintomas. Como posso ajudar?`;
   }
-  return `Entendo sua preocupação com ${name}! 🐾 Pergunte sobre: **vacinas**, **vermífugo**, **check-up**, **alimentação** ou **sintomas**. Para urgências, recomendo consultar nosso veterinário! 💜`;
+  return `Entendo sua preocupação com ${name}! Pergunte sobre vacinas, vermífugo, check-up, alimentação ou sintomas. Para urgências, recomendo consultar nosso veterinário.`;
 };
 
 const QUICK_REPLIES = [
-  { label: '💉 Vacina', key: 'vacina' },
-  { label: '🐛 Vermífugo', key: 'vermifugo' },
-  { label: '🔬 Check-up', key: 'check-up' },
-  { label: '😟 Sintomas', key: 'doente' },
-  { label: '📅 Agendar', key: 'consulta' },
+  { label: 'Vacina', key: 'vacina' },
+  { label: 'Vermífugo', key: 'vermifugo' },
+  { label: 'Check-up', key: 'check-up' },
+  { label: 'Sintomas', key: 'doente' },
+  { label: 'Agendar', key: 'consulta' },
 ];
 
 export default function ChatScreen() {
@@ -81,8 +80,8 @@ export default function ChatScreen() {
       setMessages([{
         id: '0',
         text: name
-          ? `Olá! 🐾 Vejo que você cuida de **${name}**! Sou o Assistente Pet Family. Pergunte sobre vacinação, vermifugação, check-ups e muito mais. Como posso ajudar hoje?`
-          : `Olá! 🐾 Sou o Assistente Pet Family com IA veterinária preventiva. Pergunte sobre vacinas, vermífugo, check-up ou sintomas!`,
+          ? `Olá! Vejo que você cuida de **${name}**! Sou o Assistente Pet Family. Pergunte sobre vacinação, vermifugação, check-ups e muito mais. Como posso ajudar hoje?`
+          : `Olá! Sou o Assistente Pet Family com IA veterinária preventiva. Pergunte sobre vacinas, vermífugo, check-up ou sintomas!`,
         sender: 'ai',
         timestamp: new Date(),
       }]);
@@ -168,7 +167,9 @@ export default function ChatScreen() {
           ListFooterComponent={
             isTyping ? (
               <View style={styles.typingRow}>
-                <View style={styles.typingAvatar}><Text style={{ fontSize: 14 }}>🐾</Text></View>
+                <View style={styles.typingAvatar}>
+                  <Image source={require('../assets/logo.png')} style={{ width: 20, height: 20 }} resizeMode="contain" />
+                </View>
                 <View style={styles.typingBubble}>
                   <View style={styles.dotsRow}>
                     <View style={[styles.dot, styles.dot1]} />
@@ -273,10 +274,11 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: Colors.primaryLight,
+    backgroundColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 6,
+    overflow: 'hidden',
   },
   typingBubble: {
     backgroundColor: Colors.white,

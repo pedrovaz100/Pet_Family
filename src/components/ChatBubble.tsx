@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import { ChatMessage } from '../types';
 import { Colors } from '../constants/colors';
 
@@ -18,7 +18,7 @@ export const ChatBubble: React.FC<ChatBubbleProps> = ({ message }) => {
     <View style={[styles.row, isUser ? styles.rowUser : styles.rowAI]}>
       {!isUser && (
         <View style={styles.avatar}>
-          <Text style={styles.avatarText}>🐾</Text>
+          <Image source={require('../../assets/logo.png')} style={styles.avatarImg} resizeMode="contain" />
         </View>
       )}
       <View style={[styles.bubble, isUser ? styles.bubbleUser : styles.bubbleAI]}>
@@ -47,13 +47,14 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: Colors.primaryLight,
+    backgroundColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 6,
     marginBottom: 4,
+    overflow: 'hidden',
   },
-  avatarText: { fontSize: 16 },
+  avatarImg: { width: 24, height: 24 },
   bubble: {
     maxWidth: '75%',
     borderRadius: 18,

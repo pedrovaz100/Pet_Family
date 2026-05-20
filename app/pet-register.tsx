@@ -267,10 +267,7 @@ export default function PetRegisterScreen() {
               {loading ? (
                 <Text style={styles.saveBtnText}>Salvando...</Text>
               ) : (
-                <>
-                  <Ionicons name="save-outline" size={20} color={Colors.white} />
-                  <Text style={styles.saveBtnText}>Salvar Pet</Text>
-                </>
+                <Text style={styles.saveBtnText}>Salvar Pet</Text>
               )}
             </LinearGradient>
           </TouchableOpacity>
