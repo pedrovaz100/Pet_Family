@@ -11,34 +11,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import { KpiCard } from '../src/components/KpiCard';
 import { getPet, getAppointment } from '../src/services/storage';
 import { Pet, Appointment } from '../src/types';
 import { Colors } from '../src/constants/colors';
 
 const { width } = Dimensions.get('window');
-
-const KPIS = [
-  { label: 'Retenção 90 dias', value: '87%', icon: '📈', color: Colors.green, trend: '↑ +5%' },
-  { label: 'Adesão Vacinal', value: '92%', icon: '💉', color: Colors.blue, trend: '↑ +3%' },
-  { label: 'NPS da Clínica', value: '78', icon: '⭐', color: Colors.yellow, trend: 'Excelente' },
-  { label: 'Pets Ativos', value: '214', icon: '🐾', color: Colors.primary, trend: '↑ +12' },
-  { label: 'Prev. Agendadas', value: '48', icon: '📋', color: Colors.teal, trend: 'Este mês' },
-  { label: 'Retorno Mensal', value: '63%', icon: '🔄', color: Colors.orange, trend: '↑ +8%' },
-];
-
-const ALERTS = [
-  { id: 1, text: 'Vacina V10 vence em 7 dias', color: Colors.yellow, icon: '⚠️', bg: '#FFF3CD' },
-  { id: 2, text: 'Check-up anual em aberto há 3 meses', color: Colors.errorRed, icon: '🚨', bg: '#FEE2E2' },
-  { id: 3, text: 'Vermifugação recomendada este mês', color: Colors.blue, icon: 'ℹ️', bg: Colors.blueLight },
-];
-
-const HISTORY = [
-  { date: '10/03/2026', action: 'Consulta preventiva', vet: 'Dr. Carvalho', icon: '🩺' },
-  { date: '15/01/2026', action: 'Vacinação V10 aplicada', vet: 'Dra. Ribeiro', icon: '💉' },
-  { date: '05/11/2025', action: 'Check-up anual completo', vet: 'Dr. Carvalho', icon: '🔬' },
-  { date: '20/08/2025', action: 'Consulta de retorno', vet: 'Dra. Fernandes', icon: '🔄' },
-];
 
 const TYPE_LABELS: Record<string, string> = {
   preventive: 'Preventiva', vaccination: 'Vacinação',
@@ -181,40 +158,6 @@ export default function DashboardScreen() {
             )}
           </View>
 
-          {/* ── ALERTAS ── */}
-          <Text style={styles.sectionTitle}>Alertas Preventivos</Text>
-          {ALERTS.map(alert => (
-            <View key={alert.id} style={[styles.alertCard, { backgroundColor: alert.bg, borderLeftColor: alert.color }]}>
-              <Text style={styles.alertIcon}>{alert.icon}</Text>
-              <Text style={styles.alertText}>{alert.text}</Text>
-            </View>
-          ))}
-
-          {/* ── KPIs ── */}
-          <Text style={styles.sectionTitle}>Indicadores de Performance</Text>
-          <View style={styles.kpiGrid}>
-            {KPIS.map((kpi, i) => (
-              <KpiCard key={i} label={kpi.label} value={kpi.value} icon={kpi.icon} color={kpi.color} trend={kpi.trend} />
-            ))}
-          </View>
-
-          {/* ── HISTÓRICO ── */}
-          <Text style={styles.sectionTitle}>Histórico Clínico</Text>
-          <View style={styles.histCard}>
-            {HISTORY.map((h, i) => (
-              <View key={i} style={[styles.histItem, i < HISTORY.length - 1 && styles.histBorder]}>
-                <View style={styles.histIconBox}>
-                  <Text style={{ fontSize: 18 }}>{h.icon}</Text>
-                </View>
-                <View style={styles.histInfo}>
-                  <Text style={styles.histAction}>{h.action}</Text>
-                  <Text style={styles.histMeta}>{h.vet}</Text>
-                </View>
-                <Text style={styles.histDate}>{h.date}</Text>
-              </View>
-            ))}
-          </View>
-
           <View style={styles.bottomPad} />
         </View>
       </ScrollView>
@@ -335,46 +278,6 @@ const styles = StyleSheet.create({
   apptDate: { fontSize: 13, color: Colors.primary, fontWeight: '700', marginTop: 4 },
   apptConfirmed: { alignItems: 'center', gap: 2 },
   apptConfirmedText: { fontSize: 10, color: Colors.green, fontWeight: '700' },
-
-  alertCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    borderRadius: 14,
-    padding: 12,
-    marginBottom: 8,
-    borderLeftWidth: 3,
-  },
-  alertIcon: { fontSize: 18 },
-  alertText: { fontSize: 13, color: Colors.text, flex: 1, fontWeight: '500' },
-
-  kpiGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginBottom: 4 },
-
-  histCard: {
-    backgroundColor: Colors.white,
-    borderRadius: 20,
-    padding: 8,
-    marginBottom: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.07,
-    shadowRadius: 10,
-    elevation: 3,
-  },
-  histItem: { flexDirection: 'row', alignItems: 'center', paddingVertical: 10, paddingHorizontal: 8, gap: 12 },
-  histBorder: { borderBottomWidth: 1, borderBottomColor: Colors.border },
-  histIconBox: {
-    width: 38,
-    height: 38,
-    borderRadius: 12,
-    backgroundColor: Colors.primaryLight,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  histInfo: { flex: 1 },
-  histAction: { fontSize: 13, fontWeight: '700', color: Colors.text },
-  histMeta: { fontSize: 11, color: Colors.textSecondary, marginTop: 2 },
-  histDate: { fontSize: 11, color: Colors.textLight, fontWeight: '500' },
 
   bottomPad: { height: 28 },
 });
