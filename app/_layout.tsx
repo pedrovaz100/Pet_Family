@@ -78,9 +78,9 @@ export default function RootLayout() {
       <Tabs.Screen
         name="agenda"
         options={{
-          title: 'Agenda',
+          title: 'Lembretes',
           tabBarIcon: ({ color, focused }) => (
-            <TabIcon name={focused ? 'calendar' : 'calendar-outline'} color={color} focused={focused} />
+            <TabIcon name={focused ? 'notifications' : 'notifications-outline'} color={color} focused={focused} />
           ),
         }}
       />

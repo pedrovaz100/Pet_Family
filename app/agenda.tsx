@@ -59,9 +59,9 @@ export default function AgendaScreen() {
           end={{ x: 1, y: 1 }}
           style={styles.header}
         >
-          <Text style={styles.headerTitle}>Agenda de Cuidados</Text>
+          <Text style={styles.headerTitle}>Lembretes</Text>
           <Text style={styles.headerSub}>
-            {petName ? `Acompanhamento de ${petName}` : 'Acompanhamento preventivo'}
+            {petName ? `Lembretes de ${petName}` : 'Lembretes importantes do seu pet'}
           </Text>
 
           {/* Progress ring area */}
@@ -95,7 +95,7 @@ export default function AgendaScreen() {
             <View style={styles.progressBg}>
               <View style={[styles.progressFill, { width: `${pct}%` as any }]} />
             </View>
-            <Text style={styles.progressText}>{done.length} de {total} cuidados realizados</Text>
+            <Text style={styles.progressText}>{done.length} de {total} lembretes realizados</Text>
           </View>
 
           {pending.length > 0 && (
