@@ -2,52 +2,54 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Reminder } from '../types';
-import { Colors } from '../constants/colors';
 
 interface ReminderCardProps {
   reminder: Reminder;
   onMarkDone: (id: string) => void;
 }
 
-const statusColors: Record<string, string> = {
-  pending: Colors.yellow,
-  done: Colors.green,
-  recommended: Colors.blue,
-};
-
-const statusLabels: Record<string, string> = {
-  pending: 'Pendente',
-  done: 'Concluído',
-  recommended: 'Recomendado',
+const STATUS_CONFIG = {
+  pending: { label: 'Pendente', color: '#D97706', bg: '#FFFBEB', accent: '#F59E0B' },
+  done:    { label: 'Concluído', color: '#059669', bg: '#F0FDF4', accent: '#10B981' },
+  recommended: { label: 'Recomendado', color: '#4F46E5', bg: '#EEF2FF', accent: '#6366F1' },
 };
 
 export const ReminderCard: React.FC<ReminderCardProps> = ({ reminder, onMarkDone }) => {
-  const statusColor = statusColors[reminder.status];
+  const cfg = STATUS_CONFIG[reminder.status];
 
   return (
     <View style={[styles.card, reminder.status === 'done' && styles.cardDone]}>
-      <View style={styles.iconBox}>
-        <Text style={styles.iconText}>{reminder.icon}</Text>
-      </View>
-      <View style={styles.content}>
+      <View style={[styles.accent, { backgroundColor: cfg.accent }]} />
+      <View style={styles.body}>
         <View style={styles.topRow}>
-          <Text style={[styles.title, reminder.status === 'done' && styles.titleDone]}>
+          <Text
+            style={[styles.title, reminder.status === 'done' && styles.titleDone]}
+            numberOfLines={1}
+          >
             {reminder.title}
           </Text>
-          <View style={[styles.badge, { backgroundColor: statusColor + '22' }]}>
-            <Text style={[styles.badgeText, { color: statusColor }]}>
-              {statusLabels[reminder.status]}
-            </Text>
+          <View style={[styles.badge, { backgroundColor: cfg.bg }]}>
+            <Text style={[styles.badgeText, { color: cfg.color }]}>{cfg.label}</Text>
           </View>
         </View>
-        <Text style={styles.description}>{reminder.description}</Text>
-        <Text style={styles.date}>📅 {reminder.date}</Text>
-        {reminder.status !== 'done' && (
-          <TouchableOpacity style={styles.doneBtn} onPress={() => onMarkDone(reminder.id)}>
-            <Ionicons name="checkmark-circle-outline" size={16} color={Colors.primary} />
-            <Text style={styles.doneBtnText}>Marcar como feito</Text>
-          </TouchableOpacity>
-        )}
+
+        <Text style={styles.description} numberOfLines={2}>{reminder.description}</Text>
+
+        <View style={styles.footer}>
+          <View style={styles.dateRow}>
+            <Ionicons name="calendar-outline" size={11} color="#9CA3AF" />
+            <Text style={styles.date}>{reminder.date}</Text>
+          </View>
+          {reminder.status !== 'done' && (
+            <TouchableOpacity
+              style={styles.doneBtn}
+              onPress={() => onMarkDone(reminder.id)}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.doneBtnText}>Marcar como feito</Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     </View>
   );
@@ -55,74 +57,72 @@ export const ReminderCard: React.FC<ReminderCardProps> = ({ reminder, onMarkDone
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.white,
-    borderRadius: 16,
-    padding: 14,
-    marginBottom: 12,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 14,
+    marginBottom: 10,
     flexDirection: 'row',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.07,
-    shadowRadius: 6,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+    overflow: 'hidden',
   },
-  cardDone: {
-    opacity: 0.7,
-    backgroundColor: '#F9FFF9',
-  },
-  iconBox: {
-    width: 44,
-    height: 44,
-    borderRadius: 12,
-    backgroundColor: Colors.primaryLight,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-  },
-  iconText: { fontSize: 22 },
-  content: { flex: 1 },
+  cardDone: { opacity: 0.55 },
+  accent: { width: 3, alignSelf: 'stretch' },
+  body: { flex: 1, padding: 14, paddingLeft: 16 },
+
   topRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 4,
+    marginBottom: 5,
+    gap: 8,
   },
   title: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: Colors.text,
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#111827',
     flex: 1,
+    letterSpacing: -0.1,
   },
   titleDone: {
     textDecorationLine: 'line-through',
-    color: Colors.textSecondary,
+    color: '#9CA3AF',
   },
   badge: {
     paddingHorizontal: 8,
     paddingVertical: 3,
-    borderRadius: 8,
-    marginLeft: 8,
+    borderRadius: 20,
+    flexShrink: 0,
   },
-  badgeText: { fontSize: 11, fontWeight: '600' },
+  badgeText: { fontSize: 10, fontWeight: '600', letterSpacing: 0.1 },
+
   description: {
-    fontSize: 13,
-    color: Colors.textSecondary,
-    marginBottom: 4,
-    lineHeight: 18,
-  },
-  date: {
     fontSize: 12,
-    color: Colors.textLight,
-    marginBottom: 8,
+    color: '#6B7280',
+    lineHeight: 17,
+    marginBottom: 10,
   },
-  doneBtn: {
+
+  footer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    justifyContent: 'space-between',
+  },
+  dateRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  date: { fontSize: 11, color: '#9CA3AF', fontWeight: '500' },
+
+  doneBtn: {
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    borderRadius: 6,
+    backgroundColor: '#F3EDFF',
   },
   doneBtnText: {
-    fontSize: 13,
-    color: Colors.primary,
+    fontSize: 11,
+    color: '#6F3CC3',
     fontWeight: '600',
+    letterSpacing: 0.1,
   },
 });
