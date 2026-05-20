@@ -15,7 +15,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getPet, getAppointment } from '../src/services/storage';
 import { Pet, Appointment } from '../src/types';
-import { Colors } from '../src/constants/colors';
 
 const { width } = Dimensions.get('window');
 const CARD_W = (width - 44) / 2;
@@ -36,7 +35,7 @@ const speciesEmoji: Record<string, string> = {
 
 const CATEGORIES = [
   { label: 'Meu Pet', icon: 'paw', route: '/pet-register' },
-  { label: 'Agenda', icon: 'calendar', route: '/agenda' },
+  { label: 'Lembretes', icon: 'notifications', route: '/agenda' },
   { label: 'Chat IA', icon: 'chatbubbles', route: '/chat' },
   { label: 'Consulta', icon: 'medical', route: '/appointment' },
   { label: 'Clínica', icon: 'stats-chart', route: '/dashboard' },
