@@ -154,6 +154,8 @@ Os dados são carregados automaticamente ao abrir cada tela usando `useEffect` e
 
 ---
 
+LINK VIDEO: https://youtu.be/lMNOv6BkaOI?si=jpeyoyVkqabfCm6J
+
 ## 🏫 Contexto Acadêmico
 
 > Protótipo acadêmico desenvolvido para o **Challenge FIAP 2026**
